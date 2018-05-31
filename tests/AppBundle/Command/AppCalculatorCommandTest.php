@@ -47,6 +47,20 @@ class AppCalculatorCommandTest extends KernelTestCase
 	$this->assertContains((string)$sum, $this->executeCommand($data, []));
     }
 
+    public function testAddWithNegetaiveNumbers() {
+	$data = [
+		'delimeter' 	=> '\\,\\',
+		'operation' 	=> 'add', 
+		'value1' 	=> '2,7,-3,5,-2'
+	];
+	$seperator = ',';
+	if(!empty($data['delimeter'])) {
+		$seperator = str_replace('\\', '', $data['delimeter']);
+	}
+	$sum = array_sum(explode($seperator, $data['value1']));
+	$this->assertContains('Error: Negative numbers not allowed.', $this->executeCommand($data, []));
+    }   
+
     /**
      * This helper method abstracts the boilerplate code needed to test the
      * execution of a command.

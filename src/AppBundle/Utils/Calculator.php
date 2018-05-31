@@ -13,6 +13,10 @@ class Calculator {
 		$param = str_replace('\n', ',', $param);
 		$this->param = explode( $this->seperator, $param );
 	}
+
+	public function checkNegetaiveNumbers(){
+		return min($this->param) < 0;
+	}
 	
 	public function sum() {
 		

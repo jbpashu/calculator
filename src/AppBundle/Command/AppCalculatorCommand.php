@@ -31,10 +31,16 @@ class AppCalculatorCommand extends ContainerAwareCommand
         $argument2 = $input->getArgument('value2');
 
 	$objCalculator = new Calculator($delimeter, $argument1);
+
+	if ($objCalculator->checkNegetaiveNumbers()) {
+	    $output->writeln('Error: Negative numbers not allowed.');
+	    //exit;
+	} else {
 	
-	switch(strtolower($operation)) {
-		case 'add'	: $output->writeln($objCalculator->sum()); break;
-		default		: break;
+		switch(strtolower($operation)) {
+			case 'add': $output->writeln($objCalculator->sum()); break;
+			default	  : break;
+		}
 	}
     }
 
