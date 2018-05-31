@@ -59,7 +59,21 @@ class AppCalculatorCommandTest extends KernelTestCase
 	}
 	$sum = array_sum(explode($seperator, $data['value1']));
 	$this->assertContains('Error: Negative numbers (-3,-2) not allowed.', $this->executeCommand($data, []));
-    }   
+    }
+
+    public function testAddWithBiggerNumbers() {
+	$data = [
+		'delimeter' 	=> '\\,\\',
+		'operation' 	=> 'add', 
+		'value1' 	=> '10,20,1010,20'
+	];
+	$seperator = ',';
+	if(!empty($data['delimeter'])) {
+		$seperator = str_replace('\\', '', $data['delimeter']);
+	}
+	$sum = array_sum(explode($seperator, $data['value1']));
+	$this->assertContains('50', $this->executeCommand($data, []));
+    }
 
     /**
      * This helper method abstracts the boilerplate code needed to test the

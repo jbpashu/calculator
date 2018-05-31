@@ -17,9 +17,16 @@ class Calculator {
 	public function checkNegetaiveNumbers(){
 		return min($this->param) < 0;
 	}
+
+	protected function removeNumberBiggerThanThousand() {
+		$array = array_filter($this->param, function($x) {
+		    return $x < 1000;
+		});
+		$this->param = $array;
+	}
 	
 	public function sum() {
-		
+		$this->removeNumberBiggerThanThousand();
 		return array_sum( $this->param );
 	}
 
@@ -27,6 +34,5 @@ class Calculator {
 		return  array_filter($this->param, function($x) {
 		    return $x < 0;
 		});
-
 	}
 }
