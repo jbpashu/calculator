@@ -56,31 +56,29 @@ class AppCalculatorCommandTest extends KernelTestCase
 	
     public function testSumWithoutValues()
     {
-        $this->executeCommand([
-			'operation' 	=> 'sum',
+        $this->assertContains('0', $this->executeCommand([
+			'operation' 	=> 'add',
 			'value1' 	=> '',
 			'value1' 	=> '',
-		], []);
+		], []));
 
     }
 
     public function testSumWithOneValue()
     {
-	$this->executeCommand([
-			'operation' 	=> 'sum',
+	$this->assertContains('1', $this->executeCommand([
+			'operation' 	=> 'add',
 			'value1' 	=> '1',
-			'value1' 	=> '',
-		], []);
+		], []));
     }
 
     public function testSumWithAllValues()
     {
-        $this->executeCommand([
+        $this->assertContains('5',$this->executeCommand([
 		
-			'operation' 	=> 'sum',
-			'value1' 	=> '2',
-			'value1' 	=> '3',
-		], []);
+			'operation' 	=> 'add',
+			'value1' 	=> '2,3',
+		], []));
     }
 
 
@@ -103,5 +101,7 @@ class AppCalculatorCommandTest extends KernelTestCase
         $commandTester = new CommandTester($command);
         $commandTester->setInputs($inputs);
         $commandTester->execute($arguments);
+	
+	return $commandTester->getDisplay(); 
     }
 }

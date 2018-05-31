@@ -2,15 +2,14 @@
 namespace AppBundle\Utils;
 
 class Calculator {
-	protected $param1;
-	protected $param2;
+	protected $param = [];
+	protected $seperator = ',';
 
-	public function __construct($param1 = 0, $param2 = 0) {
-		$this->param1 = $param1;
-		$this->param2 = $param2;
+	public function __construct($param = [0]) {
+		$this->param = explode($this->seperator, $param);
 	}
 	
 	public function sum() {
-		return $this->param1 + $this->param2;
+		return array_sum( $this->param );
 	}
 }

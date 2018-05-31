@@ -31,7 +31,7 @@ class AppCalculatorCommand extends ContainerAwareCommand
 	$objCalculator = new Calculator($argument1, $argument2);
 	
 	switch(strtolower($operation)) {
-		case 'sum'	: $output->writeln($objCalculator->sum()); break;
+		case 'add'	: $output->writeln($objCalculator->sum()); break;
 		default		: break;
 	}
     }
