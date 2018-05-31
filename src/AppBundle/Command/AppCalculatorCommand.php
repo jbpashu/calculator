@@ -16,6 +16,7 @@ class AppCalculatorCommand extends ContainerAwareCommand
         $this
             ->setName('app:calculator')
             ->setDescription('an easy and simple calculator')
+            ->addArgument('delimeter', InputArgument::REQUIRED, 'Delimeter String')
             ->addArgument('operation', InputArgument::REQUIRED, 'Sum operation')
             ->addArgument('value1', InputArgument::OPTIONAL, 'First number')
             ->addArgument('value2', InputArgument::OPTIONAL, 'Second number')
@@ -24,11 +25,12 @@ class AppCalculatorCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $delimeter = $input->getArgument('delimeter');
         $operation = $input->getArgument('operation');
         $argument1 = $input->getArgument('value1');
         $argument2 = $input->getArgument('value2');
 
-	$objCalculator = new Calculator($argument1, $argument2);
+	$objCalculator = new Calculator($delimeter, $argument1);
 	
 	switch(strtolower($operation)) {
 		case 'add'	: $output->writeln($objCalculator->sum()); break;

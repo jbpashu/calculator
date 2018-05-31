@@ -25,61 +25,27 @@ class AppCalculatorCommandTest extends KernelTestCase
     public function provideData()
     {
 	return [
-		[['operation' 	=> 'add', 'value1' 	=> '1']],
-		[['operation' 	=> 'add', 'value1' 	=> '2,3']],
-		[['operation' 	=> 'add', 'value1' 	=> '4,5,6']],
-		[['operation' 	=> 'add', 'value1' 	=> '2,3,4,5']],
-		[['operation' 	=> 'add', 'value1' 	=> '4,7,3,4,7,5,6,7,4,3,2,5,7,5,3,4,6,7,8,9,5,5,5,4,2,3']]
+[['delimeter' 	=> '\\,\\','operation' 	=> 'add', 'value1' 	=> '1']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'add', 'value1' 	=> '2,3']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'add', 'value1' 	=> '4,5,6']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'add', 'value1' 	=> '2,3,4,5']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'add', 'value1' 	=> '4,7,3,4,7,5,6,7,4,3,2,5,7,5,3,4,6,7,8,9,5,5,5,4,2,3']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'add', 'value1' 	=> '2\n,3,4']],
+[['delimeter' 	=> '\\;\\','operation' 	=> 'add', 'value1' 	=> '3;4;5']],
 	];
-    }
-
-	
-    public function testSumWithoutValues()
-    {
-        $this->assertContains('0', $this->executeCommand([
-			'operation' 	=> 'add',
-			'value1' 	=> '',
-			'value1' 	=> '',
-		], []));
-
-    }
-
-    public function testSumWithOneValue()
-    {
-	$this->assertContains('1', $this->executeCommand([
-			'operation' 	=> 'add',
-			'value1' 	=> '1',
-		], []));
-    }
-
-    public function testSumWithAllValues()
-    {
-        $this->assertContains('5',$this->executeCommand([
-		
-			'operation' 	=> 'add',
-			'value1' 	=> '2,3',
-		], []));
-    }
+    }    
 	
     /**
      *@dataProvider provideData
      */
     public function testAddWithDataProvider($data) {
-	$sum = array_sum(explode(',', $data['value1']));
+	$seperator = ',';
+	if(!empty($data['delimeter'])) {
+		$seperator = str_replace('\\', '', $data['delimeter']);
+	}
+	$sum = array_sum(explode($seperator, $data['value1']));
 	$this->assertContains((string)$sum, $this->executeCommand($data, []));
     }
-
-    public function testSumWithNewLine()
-    {
-        $this->assertContains('9',$this->executeCommand([
-		
-			'operation' 	=> 'add',
-			'value1' 	=> '2\n,3,4',
-		], []));
-    }
-
-
-
 
     /**
      * This helper method abstracts the boilerplate code needed to test the
