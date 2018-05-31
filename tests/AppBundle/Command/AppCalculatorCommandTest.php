@@ -22,35 +22,15 @@ class AppCalculatorCommandTest extends KernelTestCase
         }
     }
 
-    public function provideOnlyOperationData()
+    public function provideData()
     {
-	return 
-		[
-			'operation' 	=> 'sum',
-			'value1' 	=> '',
-			'value1' 	=> '',
-		];
-    }
-
-    public function provideOnlyOperationAndFirstValueData()
-    {
-	return 
-		[
-			'operation' 	=> 'sum',
-			'value1' 	=> '1',
-			'value1' 	=> '',
-		];
-    }
-
-    public function provideAllData()
-    {
-	return 
-		[
-		
-			'operation' 	=> 'sum',
-			'value1' 	=> '2',
-			'value1' 	=> '3',
-		];
+	return [
+		[['operation' 	=> 'add', 'value1' 	=> '1']],
+		[['operation' 	=> 'add', 'value1' 	=> '2,3']],
+		[['operation' 	=> 'add', 'value1' 	=> '4,5,6']],
+		[['operation' 	=> 'add', 'value1' 	=> '2,3,4,5']],
+		[['operation' 	=> 'add', 'value1' 	=> '4,7,3,4,7,5,6,7,4,3,2,5,7,5,3,4,6,7,8,9,5,5,5,4,2,3']]
+	];
     }
 
 	
@@ -80,6 +60,16 @@ class AppCalculatorCommandTest extends KernelTestCase
 			'value1' 	=> '2,3',
 		], []));
     }
+	
+    /**
+	*@dataProvider provideData
+	*/
+    public function testAddWithDataProvider($data) {
+		$sum = array_sum(explode(',', $data['value1']));
+		$this->assertContains((string)$sum, $this->executeCommand($data, []));
+	}
+
+
 
 
 
