@@ -35,4 +35,9 @@ class Calculator {
 		    return $x < 0;
 		});
 	}
+	
+	public function multiply() {
+		$this->removeNumberBiggerThanThousand();
+		return array_product( $this->param );
+	}
 }

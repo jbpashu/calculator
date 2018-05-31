@@ -33,7 +33,20 @@ class AppCalculatorCommandTest extends KernelTestCase
 [['delimeter' 	=> '\\,\\','operation' 	=> 'add', 'value1' 	=> '2\n,3,4']],
 [['delimeter' 	=> '\\;\\','operation' 	=> 'add', 'value1' 	=> '3;4;5']],
 	];
-    }    
+    }
+
+    public function provideMultiplyData()
+    {
+	return [
+[['delimeter' 	=> '\\,\\','operation' 	=> 'multiply', 'value1' 	=> '1']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'multiply', 'value1' 	=> '2,3']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'multiply', 'value1' 	=> '4,5,6']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'multiply', 'value1' 	=> '2,3,4,5']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'multiply', 'value1' 	=> '4,7,3,4,7,5,6,7,4,3,2,5,7,5,3,4,6,7,8,9,5,5,5,4,2,3']],
+[['delimeter' 	=> '\\,\\','operation' 	=> 'multiply', 'value1' 	=> '2\n,3,4']],
+[['delimeter' 	=> '\\;\\','operation' 	=> 'multiply', 'value1' 	=> '3;4;5']],
+	];
+    }
 	
     /**
      *@dataProvider provideData
@@ -44,6 +57,18 @@ class AppCalculatorCommandTest extends KernelTestCase
 		$seperator = str_replace('\\', '', $data['delimeter']);
 	}
 	$sum = array_sum(explode($seperator, $data['value1']));
+	$this->assertContains((string)$sum, $this->executeCommand($data, []));
+    }
+
+    /**
+     *@dataProvider provideMultiplyData
+     */
+    public function testMultiplyWithDataProvider($data) {
+	$seperator = ',';
+	if(!empty($data['delimeter'])) {
+		$seperator = str_replace('\\', '', $data['delimeter']);
+	}
+	$sum = array_product(explode($seperator, $data['value1']));
 	$this->assertContains((string)$sum, $this->executeCommand($data, []));
     }
 
