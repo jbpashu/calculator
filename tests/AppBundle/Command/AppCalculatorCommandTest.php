@@ -62,13 +62,21 @@ class AppCalculatorCommandTest extends KernelTestCase
     }
 	
     /**
-	*@dataProvider provideData
-	*/
+     *@dataProvider provideData
+     */
     public function testAddWithDataProvider($data) {
-		$sum = array_sum(explode(',', $data['value1']));
-		$this->assertContains((string)$sum, $this->executeCommand($data, []));
-	}
+	$sum = array_sum(explode(',', $data['value1']));
+	$this->assertContains((string)$sum, $this->executeCommand($data, []));
+    }
 
+    public function testSumWithNewLine()
+    {
+        $this->assertContains('9',$this->executeCommand([
+		
+			'operation' 	=> 'add',
+			'value1' 	=> '2\n,3,4',
+		], []));
+    }
 
 
 
