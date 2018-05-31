@@ -33,7 +33,7 @@ class AppCalculatorCommand extends ContainerAwareCommand
 	$objCalculator = new Calculator($delimeter, $argument1);
 
 	if ($objCalculator->checkNegetaiveNumbers()) {
-	    $output->writeln('Error: Negative numbers not allowed.');
+	    $output->writeln(sprintf('Error: Negative numbers (%s) not allowed.', implode(',', $objCalculator->getNegativeNumbers())));
 	    //exit;
 	} else {
 	

@@ -58,7 +58,7 @@ class AppCalculatorCommandTest extends KernelTestCase
 		$seperator = str_replace('\\', '', $data['delimeter']);
 	}
 	$sum = array_sum(explode($seperator, $data['value1']));
-	$this->assertContains('Error: Negative numbers not allowed.', $this->executeCommand($data, []));
+	$this->assertContains('Error: Negative numbers (-3,-2) not allowed.', $this->executeCommand($data, []));
     }   
 
     /**

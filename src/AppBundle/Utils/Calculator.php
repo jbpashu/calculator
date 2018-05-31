@@ -22,4 +22,11 @@ class Calculator {
 		
 		return array_sum( $this->param );
 	}
+
+	public function getNegativeNumbers() {
+		return  array_filter($this->param, function($x) {
+		    return $x < 0;
+		});
+
+	}
 }
